@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-struct AssignmentItem: Identifiable {
-    var id = UUID()
-    var course = String()
-    var description = String()
-    var dueDate = Date()
-}
 struct ContentView: View {
     @ObservedObject var assignmentList = AssignmentList()
     @State private var showingAddAssignmentView = false
@@ -39,6 +33,12 @@ struct ContentView: View {
             }))
         }
     }
+}
+struct AssignmentItem: Identifiable, Codable {
+    var id = UUID()
+    var course = String()
+    var description = String()
+    var dueDate = Date()
 }
 #Preview {
     ContentView()
