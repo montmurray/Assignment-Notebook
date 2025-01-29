@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AddAssignmentView: View {
     @ObservedObject var assignmentList: AssignmentList
-    @State private var showingAddAssignmentView = false
     @State private var course = ""
     @State private var description = ""
     @State private var dueDate = Date()
@@ -22,11 +21,9 @@ struct AddAssignmentView: View {
                 }
             }
             .navigationBarTitle("Add New Assignment", displayMode: .inline)
-            .navigationBarItems(leading: EditButton(), trailing: Button(action: { showingAddAssignmentView = true }, label: { Image(systemName: "plus")
-            }))
+            }
             TextField("Description", text: $description)
             DatePicker("Due Date", selection: $dueDate, displayedComponents: .date)
-        }
         }
     }
 

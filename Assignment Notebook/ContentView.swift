@@ -15,6 +15,7 @@ struct AssignmentItem: Identifiable {
 }
 struct ContentView: View {
     @ObservedObject var assignmentList = AssignmentList()
+    @State private var showingAddAssignmentView = false
     var body: some View {
         NavigationView {
             List {
@@ -32,12 +33,13 @@ struct ContentView: View {
                 .onDelete(perform: { indexSet in assignmentList.items.remove(atOffsets: indexSet)})
             }
             .navigationBarTitle("Assignment Notebook", displayMode: .inline)
-            .navigationBarItems(leading: EditButton())
+            .sheet(isPresented: $showingAddAssignmentView, content: { AddAssignmentView(assignmentList: assignmentList)
+            })
+            .navigationBarItems(leading: EditButton(), trailing: Button(action: { showingAddAssignmentView = true }, label: { Image(systemName: "plus")
+            }))
         }
-        .padding()
     }
 }
-
 #Preview {
     ContentView()
 }
