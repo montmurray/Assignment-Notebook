@@ -14,11 +14,11 @@ struct AssignmentItem: Identifiable {
     var dueDate = Date()
 }
 struct ContentView: View {
-    @State private var assignmentItems = [AssignmentItem(course: "Algebra", description: "Linear Equation", dueDate: Date()), AssignmentItem(course: "History", description: "Civil War Paper", dueDate: Date()), AssignmentItem(course: "Science", description: "Atomic Bomb Lab", dueDate: Date())]
+    @ObservedObject var assignmentList = AssignmentList()
     var body: some View {
         NavigationView {
             List {
-                ForEach(assignmentItems) { item in HStack {
+                ForEach(assignmentList.items) { item in HStack {
                     VStack(alignment: .leading, content: {
                         Text(item.course).font(.headline)
                         Text(item.description)
@@ -27,9 +27,9 @@ struct ContentView: View {
                     Text(item.dueDate, style: .date)
                 }
                 }
-                .onMove(perform: { indices, newOffset in assignmentItems.move(fromOffsets: indices, toOffset: newOffset)})
+                .onMove(perform: { indices, newOffset in assignmentList.items.move(fromOffsets: indices, toOffset: newOffset)})
                 
-                .onDelete(perform: { indexSet in assignmentItems.remove(atOffsets: indexSet)})
+                .onDelete(perform: { indexSet in assignmentList.items.remove(atOffsets: indexSet)})
             }
             .navigationBarTitle("Assignment Notebook", displayMode: .inline)
             .navigationBarItems(leading: EditButton())
